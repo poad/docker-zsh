@@ -22,7 +22,7 @@ RUN apt-get update -qq \
  && apt-get autoremove --purge -qqy ca-certificates gnupg2 software-properties-common \
  && apt-get autoremove --purge -qqy \
  && apt-get clean \
- && rm -rf /var/lib/apt/lists /tmp/* /var/log/apt/* /var/log/alternatives.log /var/log/dpkg.log /var/log/faillog /var/log/lastlog
+ && rm -rf /var/lib/apt/lists/* /tmp/* /var/log/apt/* /var/log/alternatives.log /var/log/dpkg.log /var/log/faillog /var/log/lastlog
 
 RUN groupadd -g 10000 zsh \
  && useradd -g 10000 -l -m -s /usr/bin/zsh -u 10000 zsh
