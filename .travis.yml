@@ -1,0 +1,10 @@
+os: linux
+
+language: generic
+
+services:
+  - docker
+  
+script:
+  - docker build --rm -f ubuntu/Dockerfile .
+  - docker build --rm -f debian/Dockerfile .
