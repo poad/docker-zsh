@@ -1,3 +1,6 @@
+ARG DISTRIBUTION=debian
+ARG DIST_VERION_CODE=buster-slim
+
 FROM alpine:latest AS downloader
 
 RUN apk --update add --no-cache --virtual .build-deps ca-certificates gnupg curl git \
@@ -9,7 +12,7 @@ RUN apk --update add --no-cache --virtual .build-deps ca-certificates gnupg curl
  && rm -rf /tmp/prezto/modules/prompt/external/powerlevel9k/docker /tmp/zsh-completions/.git /tmp/prezto/.git $/tmp/prezto/modules/autosuggestions/external/Dockerfile
 
 
-FROM debian:buster-slim
+FROM ${DISTRIBUTION}:${DIST_VERION_CODE}
 
 LABEL maintenar="Kenji Saito <ken-yo@mbr.nifty.com>"
 
