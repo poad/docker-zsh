@@ -1,3 +1,6 @@
+ARG DISTRIBUTION=ubuntu
+ARG DIST_VERION_CODE=focal
+
 FROM alpine:latest AS downloader
 
 RUN apk --update add --no-cache --virtual .build-deps ca-certificates gnupg curl git \
@@ -9,23 +12,23 @@ RUN apk --update add --no-cache --virtual .build-deps ca-certificates gnupg curl
  && rm -rf /tmp/prezto/modules/prompt/external/powerlevel9k/docker /tmp/zsh-completions/.git /tmp/prezto/.git $/tmp/prezto/modules/autosuggestions/external/Dockerfile
 
 
-FROM ubuntu:bionic
+FROM ${DISTRIBUTION}:${DIST_VERION_CODE}
 
 LABEL maintenar="Kenji Saito <ken-yo@mbr.nifty.com>"
 
-RUN apt-get update -qq \
- && apt-get install -qqy --no-install-recommends gnupg2 ca-certificates \
- && echo "deb http://ppa.launchpad.net/git-core/ppa/ubuntu bionic main" > /etc/apt/sources.list.d/git-core-ubuntu-ppa-focal.list \
- && echo "# deb-src http://ppa.launchpad.net/git-core/ppa/ubuntu bionic main" >> /etc/apt/sources.list.d/git-core-ubuntu-ppa-focal.list \
- && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E1DD270288B4E6030699E45FA1715D88E1DF1F24 \
+RUN export DEBIAN_FRONTEND="noninteractive" \
+ && apt-get update -qq \
+ && apt-get install -qqy --no-install-recommends gnupg2 ca-certificates software-properties-common \
+ && add-apt-repository ppa:git-core/ppa -y \
  && apt-get update -qq \
  && apt-get install -qqy --no-install-recommends zsh \
  && chsh -s /usr/bin/zsh \
- && apt-get autoremove --purge -qqy ca-certificates gnupg2 \
+ && apt-get autoremove --purge -qqy ca-certificates gnupg2 software-properties-common \
  && apt-get autoremove --purge -qqy \
  && apt-get autoremove --purge -qqy --allow-remove-essential bash \ 
  && apt-get clean \
- && rm -rf /var/lib/apt/lists/* /tmp/* /var/log/apt/* /var/log/alternatives.log /var/log/dpkg.log /var/log/faillog /var/log/lastlog
+ && rm -rf /var/lib/apt/lists/* /tmp/* /var/log/apt/* /var/log/alternatives.log /var/log/dpkg.log /var/log/faillog /var/log/lastlog \
+ && unset DEBIAN_FRONTEND
 
 RUN groupadd -g 10000 zsh \
  && useradd -g 10000 -l -m -s /usr/bin/zsh -u 10000 zsh

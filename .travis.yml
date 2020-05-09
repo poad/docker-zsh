@@ -1,10 +1,21 @@
 os: linux
 
-language: generic
+language: bash
 
 services:
   - docker
-  
+
+env:
+  matrix:
+    - DISTRIBUTION=ubuntu DIST_VERION_CODE=bionic TAG=bionic
+    - DISTRIBUTION=ubuntu DIST_VERION_CODE=focal TAG=focal
+    - DISTRIBUTION=debian DIST_VERION_CODE=buster-slim TAG=buster
+    - DISTRIBUTION=ubuntu DIST_VERION_CODE=focal TAG=latest
+
 script:
-  - docker build --rm -f ubuntu/Dockerfile .
-  - docker build --rm -f debian/Dockerfile .
+  - docker build --rm --build-arg DISTRIBUTION=${DISTRIBUTION} --build-arg DIST_VERION_CODE=${DIST_VERION_CODE} -f ${DISTRIBUTION}/Dockerfile -t "${DOCKER_USERNAME}"/docker-zsh:${TAG} .
+  - |
+    if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
+      echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin && \
+      docker push "${DOCKER_USERNAME}"/docker-zsh:${TAG}
+    fi
