@@ -1,0 +1,40 @@
+name: Docker build and push
+ 
+on:
+  push:
+    branches:
+    - main 
+  pull_request:
+    branches:
+      - main
+  schedule:
+    - cron:  '0 0 * * 2'
+
+jobs:
+  docker_build_push:
+    strategy:
+      matrix:
+        versions: [
+          { distribution: 'ubuntu', dist_verion_code: 'bionic', tag: 'bionic' },
+          { distribution: 'ubuntu', dist_verion_code: 'focal', tag: 'focal' },
+          { distribution: 'debian', dist_verion_code: 'buster', tag: 'buster' },
+          { distribution: 'ubuntu', dist_verion_code: 'focal', tag: 'latest' }
+        ]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Build
+      env:
+        IMAGRE_NAME: poad/docker-zsh:${{ matrix.versions.tag }}
+      run: |
+        CUR=$(pwd) && \
+        docker build -t ${IMAGRE_NAME} --build-arg DIST_VERION_CODE=${{ matrix.versions.dist_verion_code }} -f ${{ matrix.versions.distribution }}/Dockerfile . && \
+        cd ${CUR}
+
+    - name: Push
+      if: github.event_name != 'pull_request'
+      env:
+        IMAGRE_NAME: poad/docker-zsh:${{ matrix.versions.tag }}
+      run: |
+        echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u poad --password-stdin && \
+        docker push ${IMAGRE_NAME}

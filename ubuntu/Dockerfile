@@ -4,9 +4,9 @@ ARG DIST_VERION_CODE=focal
 FROM alpine:latest AS downloader
 
 RUN apk --update add --no-cache --virtual .build-deps ca-certificates gnupg curl git \
- && curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o /tmp/git-completion.bash \
- && curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.zsh -o /tmp/_git \
- && curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o /tmp/git-prompt.sh \
+ && curl -sSL https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o /tmp/git-completion.bash \
+ && curl -sSL https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.zsh -o /tmp/_git \
+ && curl -sSL https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o /tmp/git-prompt.sh \
  && git clone --recursive https://github.com/sorin-ionescu/prezto.git /tmp/prezto \
  && git clone git://github.com/zsh-users/zsh-completions.git /tmp/zsh-completions \
  && rm -rf /tmp/prezto/modules/prompt/external/powerlevel9k/docker /tmp/zsh-completions/.git /tmp/prezto/.git $/tmp/prezto/modules/autosuggestions/external/Dockerfile
