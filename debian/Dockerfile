@@ -1,5 +1,6 @@
 ARG DISTRIBUTION=debian
-ARG DIST_VERION_CODE=buster-slim
+ARG DIST_VERSION_CODE=buster-slim
+ARG UBUNTU_VERSION_CODE=bionic
 
 FROM alpine:latest AS downloader
 
@@ -12,14 +13,16 @@ RUN apk --update add --no-cache --virtual .build-deps ca-certificates gnupg curl
  && rm -rf /tmp/prezto/modules/prompt/external/powerlevel9k/docker /tmp/zsh-completions/.git /tmp/prezto/.git $/tmp/prezto/modules/autosuggestions/external/Dockerfile
 
 
-FROM ${DISTRIBUTION}:${DIST_VERION_CODE}
+FROM ${DISTRIBUTION}:${DIST_VERSION_CODE}
 
 LABEL maintenar="Kenji Saito <ken-yo@mbr.nifty.com>"
 
+ARG UBUNTU_VERSION_CODE
+
 RUN apt-get update -qq \
  && apt-get install -qqy --no-install-recommends gnupg2 ca-certificates \
- && echo "deb http://ppa.launchpad.net/git-core/ppa/ubuntu focal main" > /etc/apt/sources.list.d/git-core-ubuntu-ppa-focal.list \
- && echo "# deb-src http://ppa.launchpad.net/git-core/ppa/ubuntu focal main" >> /etc/apt/sources.list.d/git-core-ubuntu-ppa-focal.list \
+ && echo "deb http://ppa.launchpad.net/git-core/ppa/ubuntu ${UBUNTU_VERSION_CODE} main" > /etc/apt/sources.list.d/git-core-ubuntu-ppa-focal.list \
+ && echo "# deb-src http://ppa.launchpad.net/git-core/ppa/ubuntu ${UBUNTU_VERSION_CODE} main" >> /etc/apt/sources.list.d/git-core-ubuntu-ppa-focal.list \
  && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E1DD270288B4E6030699E45FA1715D88E1DF1F24 \
  && apt-get update -qq \
  && apt-get install -qqy --no-install-recommends zsh \
