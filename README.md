@@ -1,6 +1,7 @@
-# docker-zsh
+zsh container image based Debian/Ubuntu
+-----------------------------------------
 
-[![Automated build by Travis CI](https://travis-ci.com/poad/docker-zsh.svg?branch=master)](https://hub.docker.com/r/poad/docker-zsh)
+[![Docker build and push](https://github.com/poad/docker-zsh/actions/workflows/main.yml/badge.svg)](https://github.com/poad/docker-zsh/actions/workflows/main.yml)
 
 ## Tags
 
