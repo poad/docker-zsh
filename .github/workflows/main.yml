@@ -32,28 +32,42 @@ jobs:
     strategy:
       matrix:
         versions: [
-          { distribution: 'ubuntu', dist_version_code: 'bionic', ubuntu_version_code: 'bionic', tag: 'bionic' },
-          { distribution: 'ubuntu', dist_version_code: 'focal', ubuntu_version_code: 'focal', tag: 'focal' },
-          { distribution: 'debian', dist_version_code: 'buster', ubuntu_version_code: 'bionic', tag: 'buster' },
-          { distribution: 'ubuntu', dist_version_code: 'focal', ubuntu_version_code: 'focal', tag: 'latest' }
+          # { distribution: 'ubuntu', dist_version_code: 'bionic', ubuntu_version_code: 'bionic', tag: 'bionic', arch: 'linux/aarch64' },
+          # { distribution: 'ubuntu', dist_version_code: 'focal', ubuntu_version_code: 'focal', tag: 'focal', arch: 'linux/aarch64' },
+          # { distribution: 'debian', dist_version_code: 'buster', ubuntu_version_code: 'bionic', tag: 'buster', 'linux/aarch64' },
+          # { distribution: 'ubuntu', dist_version_code: 'focal', ubuntu_version_code: 'focal', tag: 'latest', arch: 'linux/aarch64' },
+          { distribution: 'ubuntu', dist_version_code: 'bionic', ubuntu_version_code: 'bionic', tag: 'bionic', arch: 'linux/amd64' },
+          { distribution: 'ubuntu', dist_version_code: 'focal', ubuntu_version_code: 'focal', tag: 'focal', arch: 'linux/amd64' },
+          { distribution: 'debian', dist_version_code: 'buster', ubuntu_version_code: 'bionic', tag: 'buster', arch: 'linux/amd64' },
+          { distribution: 'ubuntu', dist_version_code: 'focal', ubuntu_version_code: 'focal', tag: 'latest', arch: 'linux/amd64' }
         ]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - name: Build
+
+    - name: setup
       env:
+        DOCKER_BUILDKIT: 1
+      run: docker buildx install
+
+    - name: Build (${{ matrix.versions.arch }})
+      env:
+        PLATFORM: ${{ matrix.versions.arch }}
         IMAGRE_NAME: poad/docker-zsh:${{ matrix.versions.tag }}
+        DISTRIBUTION: ${{ matrix.versions.distribution }}
+        DIST_VERSION_CODE: ${{ matrix.versions.dist_version_code }}
+        UBUNTU_VERSION_CODE: ${{ matrix.versions.ubuntu_version_code }}
         DOCKER_BUILDKIT: 1
       run: |
-        CUR=$(pwd) && \
         docker build \
           -t ${IMAGRE_NAME} \
-          --build-arg DISTRIBUTION=${{ matrix.versions.distribution }} \
-          --build-arg DIST_VERSION_CODE=${{ matrix.versions.dist_version_code }} \
-          --build-arg UBUNTU_VERSION_CODE=${{ matrix.versions.ubuntu_version_code }} \
-          -f ${{ matrix.versions.distribution }}/Dockerfile \
-          . && \
-        cd ${CUR}
+          --build-arg DISTRIBUTION=${DISTRIBUTION} \
+          --build-arg DIST_VERSION_CODE=${DIST_VERSION_CODE} \
+          --build-arg UBUNTU_VERSION_CODE=${UBUNTU_VERSION_CODE} \
+          --platform ${PLATFORM} \
+          --progress=plain \
+          -f ${DISTRIBUTION}/Dockerfile \
+          .
 
     - name: Push
       if: github.event_name != 'pull_request' && github.actor != 'dependabot[bot]'
