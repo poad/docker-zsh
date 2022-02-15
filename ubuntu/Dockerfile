@@ -3,7 +3,11 @@ ARG DIST_VERION_CODE=focal
 
 FROM alpine:latest AS downloader
 
-RUN apk --update add --no-cache --virtual .build-deps ca-certificates gnupg curl git \
+RUN apk --update add --no-cache --virtual .build-deps \
+    curl \
+    git \
+    gnupg \
+    xz \
  && curl -sSL https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o /tmp/git-completion.bash \
  && curl -sSL https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.zsh -o /tmp/_git \
  && curl -sSL https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o /tmp/git-prompt.sh \
@@ -17,6 +21,7 @@ FROM ${DISTRIBUTION}:${DIST_VERION_CODE}
 LABEL maintenar="Kenji Saito <ken-yo@mbr.nifty.com>"
 
 RUN export DEBIAN_FRONTEND="noninteractive" \
+ && rm -rf /var/lib/apt/lists/* \
  && apt-get update -qq \
  && apt-get install -qqy --no-install-recommends gnupg2 ca-certificates software-properties-common \
  && add-apt-repository ppa:git-core/ppa -y \

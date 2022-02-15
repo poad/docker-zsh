@@ -4,7 +4,11 @@ ARG UBUNTU_VERSION_CODE=bionic
 
 FROM alpine:latest AS downloader
 
-RUN apk --update add --no-cache --virtual .build-deps ca-certificates gnupg curl git \
+RUN apk --update add --no-cache --virtual .build-deps \
+    curl \
+    git \
+    gnupg \
+    xz \
  && curl -sSL https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o /tmp/git-completion.bash \
  && curl -sSL https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.zsh -o /tmp/_git \
  && curl -sSL https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o /tmp/git-prompt.sh \
