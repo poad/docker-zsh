@@ -1,5 +1,4 @@
-zsh container image based Debian/Ubuntu
------------------------------------------
+# zsh container image based Debian/Ubuntu
 
 [![Docker build and push](https://github.com/poad/docker-zsh/actions/workflows/main.yml/badge.svg)](https://github.com/poad/docker-zsh/actions/workflows/main.yml)
 
