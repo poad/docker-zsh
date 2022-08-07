@@ -1,5 +1,5 @@
 ARG DISTRIBUTION=ubuntu
-ARG DIST_VERION_CODE=focal
+ARG DIST_VERION_CODE=jammy
 
 FROM buildpack-deps:${DIST_VERION_CODE} AS downloader
 

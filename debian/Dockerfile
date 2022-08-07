@@ -1,6 +1,6 @@
 ARG DISTRIBUTION=debian
-ARG DIST_VERSION_CODE=buster-slim
-ARG UBUNTU_VERSION_CODE=bionic
+ARG DIST_VERSION_CODE=bullseye-slim
+ARG UBUNTU_VERSION_CODE=focal
 
 FROM buildpack-deps:${UBUNTU_VERSION_CODE} AS downloader
 
