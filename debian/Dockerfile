@@ -1,5 +1,5 @@
 ARG DISTRIBUTION=debian
-ARG DIST_VERSION_CODE=bullseye-slim
+ARG DIST_VERSION_CODE=stable-slim
 ARG UBUNTU_VERSION_CODE=focal
 
 FROM buildpack-deps:${UBUNTU_VERSION_CODE} AS downloader
