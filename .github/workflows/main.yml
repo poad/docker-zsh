@@ -30,8 +30,9 @@ jobs:
     strategy:
       matrix:
         versions: [
+          { distribution: 'ubuntu', dist_version_code: 'noble', ubuntu_version_code: 'noble', tag: 'noble' },
           { distribution: 'ubuntu', dist_version_code: 'jammy', ubuntu_version_code: 'jammy', tag: 'jammy' },
-          { distribution: 'ubuntu', dist_version_code: 'jammy', ubuntu_version_code: 'jammy', tag: 'latest' },
+          { distribution: 'ubuntu', dist_version_code: 'noble', ubuntu_version_code: 'noble', tag: 'latest' },
           { distribution: 'debian', dist_version_code: 'bookworm', ubuntu_version_code: 'jammy', tag: 'bookworm' }
         ]
     runs-on: ubuntu-latest

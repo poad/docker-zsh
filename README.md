@@ -6,6 +6,7 @@
 
 | Tag | Linux Distribution | Linux Distribution Version | Base Image |
 |:---:|:---:|:---:|:---:|
-| latest | Ubuntu | 22.04(jammy) | [ubuntu:jammy](https://hub.docker.com/_/ubuntu?tag=jammy&tab=tags&name=jammy) |
+| latest | Ubuntu | 24.04(noble) | [ubuntu:jammy](https://hub.docker.com/_/ubuntu?tag=noble&tab=tags&name=noble) |
+| noble | Ubuntu | 24.04(noble) | [ubuntu:jammy](https://hub.docker.com/_/ubuntu?tag=noble&tab=tags&name=noble) |
 | jammy | Ubuntu | 22.04(jammy) | [ubuntu:jammy](https://hub.docker.com/_/ubuntu?tag=jammy&tab=tags&name=jammy) |
-| bookworm | Debian | 12.0(buster) | [debian:bookworm-slim](https://hub.docker.com/_/debian?tag=bookworm-slim&tab=tags&name=bookworm-slim) |
+| bookworm | Debian | 12.0(bookworm) | [debian:bookworm-slim](https://hub.docker.com/_/debian?tag=bookworm-slim&tab=tags&name=bookworm-slim) |

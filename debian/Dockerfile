@@ -1,6 +1,6 @@
 ARG DISTRIBUTION=debian
 ARG DIST_VERSION_CODE=stable-slim
-ARG UBUNTU_VERSION_CODE=focal
+ARG UBUNTU_VERSION_CODE=jammy
 
 FROM buildpack-deps:${UBUNTU_VERSION_CODE} AS downloader
 
