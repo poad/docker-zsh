@@ -10,9 +10,15 @@ updates:
     rebase-strategy: auto
     assignees:
       - poad
+    groups:
+      actions:
+        patterns:
+          - '*'
 
-  - package-ecosystem: npm
-    directory: '/tests/'
+  - package-ecosystem: docker
+    directories:
+      - '/debian/'
+      - '/ubuntu/'
     schedule:
       interval: daily
       timezone: Asia/Tokyo
@@ -21,3 +27,7 @@ updates:
     rebase-strategy: auto
     assignees:
       - poad
+    groups:
+      docker:
+        patterns:
+          - '*'
