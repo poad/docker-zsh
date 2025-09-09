@@ -4,7 +4,6 @@ on:
   push:
     branches: [ main ]
   pull_request:
-    # The branches below must be a subset of the branches above
     branches: [ main ]
   schedule:
     - cron: '26 17 * * 3'
@@ -16,10 +15,10 @@ jobs:
     strategy:
       matrix:
         versions: [
-          { distribution: 'ubuntu', dist_version_code: 'bionic', ubuntu_version_code: 'bionic', tag: 'bionic' },
-          { distribution: 'ubuntu', dist_version_code: 'focal', ubuntu_version_code: 'focal', tag: 'focal' },
-          { distribution: 'debian', dist_version_code: 'buster', ubuntu_version_code: 'bionic', tag: 'buster' },
-          { distribution: 'ubuntu', dist_version_code: 'focal', ubuntu_version_code: 'focal', tag: 'latest' }
+          { distribution: 'ubuntu', dist_version_code: 'noble', ubuntu_version_code: 'noble', tag: 'noble' },
+          { distribution: 'ubuntu', dist_version_code: 'jammy', ubuntu_version_code: 'jammy', tag: 'jammy' },
+          { distribution: 'ubuntu', dist_version_code: 'noble', ubuntu_version_code: 'noble', tag: 'latest' },
+          { distribution: 'debian', dist_version_code: 'bookworm', ubuntu_version_code: 'jammy', tag: 'bookworm' }
         ]
     steps:
       - name: Checkout code
